@@ -1,0 +1,65 @@
+# Sample metrics file with intentional naming convention violations
+# Used to demonstrate AI-driven convention enforcement
+
+metrics:
+  # VIOLATION: Scope word "total" in name
+  - name: total_revenue
+    description: Total revenue across all orders
+    calculation: SUM(amount)
+    entity: orders
+
+  # VIOLATION: Abbreviation "nbr", wrong structure
+  - name: nbr_of_paid_subs
+    description: Number of paid subscriptions
+    calculation: COUNT(*)
+    entity: subscriptions
+    filters:
+      - status = 'paid'
+
+  # CORRECT: Follows convention
+  - name: orders_completed_count
+    description: Count of completed orders
+    calculation: COUNT(*)
+    entity: orders
+    filters:
+      - status = 'completed'
+
+  # VIOLATION: Scope word "avg", singular entity
+  - name: avg_order_value
+    description: Average value per order
+    calculation: AVG(amount)
+    entity: order
+
+  # VIOLATION: Missing unit suffix
+  - name: customer_lifetime
+    description: Customer lifetime value
+    calculation: SUM(revenue)
+    entity: customers
+
+  # CORRECT: Follows convention
+  - name: subscriptions_churned_count
+    description: Count of churned subscriptions
+    calculation: COUNT(*)
+    entity: subscriptions
+    filters:
+      - status = 'churned'
+
+  # VIOLATION: CamelCase instead of snake_case
+  - name: MonthlyRecurringRevenue
+    description: Monthly recurring revenue
+    calculation: SUM(mrr_amount)
+    entity: subscriptions
+
+  # VIOLATION: Time period baked into name unnecessarily
+  - name: daily_active_users_count
+    description: Daily active users
+    calculation: COUNT(DISTINCT user_id)
+    entity: users
+
+  # CORRECT: Follows convention
+  - name: revenue_recurring_amount
+    description: Recurring revenue amount
+    calculation: SUM(mrr_amount)
+    entity: subscriptions
+    filters:
+      - is_active = true
